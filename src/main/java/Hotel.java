@@ -59,7 +59,7 @@ public class Hotel {
     }
 
 
-    public void estadoHabitacion(String[] habitaciones, int posicion) {
+    public void estadoHabitacion(String[] habitaciones, int posicion) { // LLAMAR MENU
         String estado = habitaciones[posicion];
         if (estado.equals("D")){
             System.out.println("La habitacion " + posicion + "Se encuentra disponible");
@@ -84,7 +84,7 @@ public class Hotel {
         }
     }
 
-    public void reservarHabitacion() {
+    public void reservarHabitacion() { // LLAMAR MENU
         int posicion = posicionHabitacion(habitaciones, scanner);
 
         if (posicion == -1) {
@@ -102,7 +102,7 @@ public class Hotel {
 
     }
 
-    public void confirmarReserva() {
+    public void confirmarReserva() { // LLAMAR MENU
         int posicion = posicionHabitacion(habitaciones, scanner);
 
         if (habitaciones[posicion].equals("R")) {
@@ -119,9 +119,9 @@ public class Hotel {
                 System.out.println("Ingresa una opcion valida");
             }
         } else {
-            System.out.println("La habitacion" + posicion " se encuentra disponible");
+            System.out.println("La habitacion" + posicion + " se encuentra disponible");
+        }
     }
-
 
 
 
