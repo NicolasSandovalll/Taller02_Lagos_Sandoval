@@ -105,7 +105,75 @@ class Hotel {
         System.out.println("El hotel ha sido inicializado.");
     }
 
+    // Consultar el estado de las habitaciones
+    public void consultarEstadoHabitaciones() {
+        for (int i = 0; i < habitaciones.length; i++) {
+            String estado = habitaciones[i];
+            System.out.println("Habitación " + i + ": " + estado);
+        }
+    }
 
+    // Reservar una habitación
+    public void reservarHabitacion() {
+        int posicion = solicitarPosicionHabitacion();
+
+        if (habitaciones[posicion].equals("D")) {
+            System.out.println("Ingrese la cantidad de noches: ");
+            nochesReservadas[posicion] = scanner.nextInt();
+            realizarAlimentacion(posicion);
+        } else {
+            System.out.println("La habitación " + posicion + " no está disponible.");
+        }
+    }
+
+    // Confirmar la reserva de una habitación
+    public void confirmarReserva() {
+        int posicion = solicitarPosicionHabitacion();
+
+        if (habitaciones[posicion].equals("R")) {
+            habitaciones[posicion] = conAlimentacion[posicion] ? "OA" : "OS"; // Ocupada con/sin alimentación
+            System.out.println("La habitación " + posicion + " ha sido ocupada.");
+        } else {
+            System.out.println("La habitación " + posicion + " no está reservada.");
+        }
+    }
+
+    // Realizar la alimentación durante la reserva
+    private void realizarAlimentacion(int posicion) {
+        System.out.println("Desea añadir alimentación? (S/N)");
+        String respuesta = scanner.next().toUpperCase();
+
+        if (respuesta.equals("S")) {
+            habitaciones[posicion] = "R"; // Reservada con alimentación
+            conAlimentacion[posicion] = true;
+            System.out.println("La habitación se ha reservado con alimentación.");
+        } else if (respuesta.equals("N")) {
+            habitaciones[posicion] = "R"; // Reservada sin alimentación
+            conAlimentacion[posicion] = false;
+            System.out.println("La habitación se ha reservado sin alimentación.");
+        } else {
+            System.out.println("Opción inválida. Intente nuevamente.");
+            realizarAlimentacion(posicion);
+        }
+    }
+
+    // Solicitar posición de habitación
+    public int solicitarPosicionHabitacion() {
+        while (true) {
+            try {
+                System.out.print("Ingrese el número de la habitación (0-9): ");
+                int posicion = scanner.nextInt();
+                if (posicion >= 0 && posicion < habitaciones.length) {
+                    return posicion;
+                } else {
+                    System.out.println("Posición fuera de rango. Ingrese un número entre 0 y 9.");
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Entrada inválida. Por favor, ingrese un número.");
+                scanner.next(); // limpiar entrada inválida
+            }
+        }
+    }
 
     // Pagar habitación
     public void pagarHabitacion() {
