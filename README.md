@@ -1,26 +1,21 @@
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-public class Hotel {
+public class HotelSystem {
 
     public static Scanner scanner = new Scanner(System.in);
-    public static String[] habitaciones = new String[10];
-    public static int[] nochesReservadas = new int[10];
-    public static boolean[] conAlimentacion = new boolean[10];
-    public static boolean[] pagada = new boolean[10]; // Indica si la habitación fue pagada o no
-    public static final String clave = "resetearTodo";
 
     public static void main(String[] args) {
-        iniciarPrograma();
+        Hotel hotel = new Hotel();  // Crear instancia de Hotel
+        iniciarPrograma(hotel);     // Pasamos el hotel como parámetro
     }
 
-    public static void iniciarPrograma() {
-        inicializarHotel();
+    public static void iniciarPrograma(Hotel hotel) {
         int opcion;
         do {
             menu();
             opcion = solicitarOpcion("Ingrese una opción: ", 1, 7);
-            procesarOpcion(opcion);
+            procesarOpcion(opcion, hotel);
         } while (opcion != 7);
     }
 
@@ -53,36 +48,54 @@ public class Hotel {
         }
     }
 
-    public static void procesarOpcion(int opcion) {
+    public static void procesarOpcion(int opcion, Hotel hotel) {
         switch (opcion) {
             case 1:
-                consultarEstadoHabitaciones();
+                hotel.consultarEstadoHabitaciones();
                 break;
             case 2:
-                reservarHabitacion();
+                hotel.reservarHabitacion();
                 break;
             case 3:
-                confirmarReserva();
+                hotel.confirmarReserva();
                 break;
             case 4:
-                pagarHabitacion();
+                hotel.pagarHabitacion();
                 break;
             case 5:
-                liberarHabitacion();
+                hotel.liberarHabitacion();
                 break;
             case 6:
                 System.out.println("Ingrese la clave para reiniciar el hotel");
                 String claveIngresada = scanner.next();
-                reiniciarHotel(claveIngresada);
+                hotel.reiniciarHotel(claveIngresada);
                 break;
             case 7:
                 System.out.println("Saliendo del programa . . .");
                 break;
         }
     }
+}
+
+class Hotel {
+    private String[] habitaciones;
+    private int[] nochesReservadas;
+    private boolean[] conAlimentacion;
+    private boolean[] pagada;
+    private static final String clave = "resetearTodo";
+    private Scanner scanner = new Scanner(System.in);
+
+    // Constructor para inicializar el hotel
+    public Hotel() {
+        habitaciones = new String[10];
+        nochesReservadas = new int[10];
+        conAlimentacion = new boolean[10];
+        pagada = new boolean[10];
+        inicializarHotel();
+    }
 
     // Inicializar el estado de todas las habitaciones
-    public static void inicializarHotel() {
+    public void inicializarHotel() {
         for (int i = 0; i < habitaciones.length; i++) {
             habitaciones[i] = "D"; // Disponible
             nochesReservadas[i] = 0;
@@ -93,7 +106,7 @@ public class Hotel {
     }
 
     // Consultar el estado de las habitaciones
-    public static void consultarEstadoHabitaciones() {
+    public void consultarEstadoHabitaciones() {
         for (int i = 0; i < habitaciones.length; i++) {
             String estado = habitaciones[i];
             System.out.println("Habitación " + i + ": " + estado);
@@ -101,7 +114,7 @@ public class Hotel {
     }
 
     // Reservar una habitación
-    public static void reservarHabitacion() {
+    public void reservarHabitacion() {
         int posicion = solicitarPosicionHabitacion();
 
         if (habitaciones[posicion].equals("D")) {
@@ -114,7 +127,7 @@ public class Hotel {
     }
 
     // Confirmar la reserva de una habitación
-    public static void confirmarReserva() {
+    public void confirmarReserva() {
         int posicion = solicitarPosicionHabitacion();
 
         if (habitaciones[posicion].equals("R")) {
@@ -126,7 +139,7 @@ public class Hotel {
     }
 
     // Realizar la alimentación durante la reserva
-    private static void realizarAlimentacion(int posicion) {
+    private void realizarAlimentacion(int posicion) {
         System.out.println("Desea añadir alimentación? (S/N)");
         String respuesta = scanner.next().toUpperCase();
 
@@ -145,7 +158,7 @@ public class Hotel {
     }
 
     // Solicitar posición de habitación
-    public static int solicitarPosicionHabitacion() {
+    public int solicitarPosicionHabitacion() {
         while (true) {
             try {
                 System.out.print("Ingrese el número de la habitación (0-9): ");
@@ -163,7 +176,7 @@ public class Hotel {
     }
 
     // Pagar habitación
-    public static void pagarHabitacion() {
+    public void pagarHabitacion() {
         int posicion = solicitarPosicionHabitacion();
 
         if (habitaciones[posicion].startsWith("O") && !pagada[posicion]) {
@@ -180,7 +193,7 @@ public class Hotel {
     }
 
     // Liberar una habitación ocupada e imprimir boleta
-    public static void liberarHabitacion() {
+    public void liberarHabitacion() {
         int posicion = solicitarPosicionHabitacion();
 
         if (habitaciones[posicion].startsWith("O") && pagada[posicion]) {
@@ -197,7 +210,7 @@ public class Hotel {
     }
 
     // Reiniciar el hotel
-    public static void reiniciarHotel(String claveIngresada) {
+    public void reiniciarHotel(String claveIngresada) {
         if (claveIngresada.equals(clave)) {
             inicializarHotel();
             System.out.println("El hotel ha sido reiniciado.");
