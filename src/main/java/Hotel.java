@@ -2,12 +2,12 @@ import java.util.Scanner;
 
 public class Hotel {
 
-    private static Scanner scanner = new Scanner(System.in);
-    private static String[] habitaciones = new String[10];
-    private static int[] nochesReservadas = new int[10];
-    private static boolean[] conAlimentacion = new boolean[10];
-    private static final String clave = "resetearTodo";
-    private static boolean[] pagada = new boolean[10]; // Indica si la habitación fue pagada o no
+    public static Scanner scanner = new Scanner(System.in);
+    public static String[] habitaciones = new String[10];
+    public static int[] nochesReservadas = new int[10];
+    public static boolean[] conAlimentacion = new boolean[10];
+    public static final String clave = "resetearTodo";
+    public static boolean[] pagada = new boolean[10]; // Indica si la habitación fue pagada o no
 
     public static void main(String[] args) {
         inicializarHotel();
