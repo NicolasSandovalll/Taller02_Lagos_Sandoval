@@ -29,6 +29,7 @@ public class Hotel {
 
         // Mostrar el estado de la habitación ingresada
         estadoHabitacion(habitaciones, posicion);
+        estadoAlimentacion(posicion);
     }
 
 
@@ -73,16 +74,21 @@ public class Hotel {
         } else {
             System.out.println("La habitacion " + posicion + "Se encuentra ocupada");
         }
-
     }
     private void estadoAlimentacion(int posicion){
+        int i = posicion;
         System.out.println("Desea añadir alimentacion S/N");
         String respuesta = scanner.next().toUpperCase(); // UTIL EN CASO DE QUE RESPONDAN EN MINUSCULAS :D
 
         if (respuesta.equals("S")) {
             habitaciones[posicion] = "RA";
-        } else {
+            System.out.println("La habitacion se ha reservado con exito con alimentacion");
+        } else if (respuesta.equals("N")) {
             habitaciones[posicion] = "OS";
+            System.out.println("La habitacion se ha reservado con exito sin alimentacion");
+        } else {
+            System.out.println("Por favor ingresa una opcion valida");
+            estadoAlimentacion(i);
         }
     }
 
