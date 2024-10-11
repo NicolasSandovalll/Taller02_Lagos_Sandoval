@@ -102,6 +102,31 @@ public class Hotel {
 
     }
 
+    public void confirmarReserva() {
+        int posicion = posicionHabitacion(habitaciones, scanner);
+
+        if (habitaciones[posicion].equals("R")) {
+            System.out.println("La habitacion " + posicion + " esta reservada");
+            System.out.println("¿Deseas confirmar la reserva? (S/N)");
+            String respuesta = scanner.next().toUpperCase();
+
+            if (respuesta.equals("S")) {
+                System.out.println("Reserva confirmada");
+            } else if (respuesta.equals("N")) {
+                habitaciones[posicion] = "D";
+                System.out.println("La reserva de la habitacion " + posicion + " ha sido cancelada");
+            } else {
+                System.out.println("Ingresa una opcion valida");
+            }
+        } else {
+            System.out.println("La habitacion" + posicion " se encuentra disponible");
+    }
+
+
+
+
+
+
 
 
 
