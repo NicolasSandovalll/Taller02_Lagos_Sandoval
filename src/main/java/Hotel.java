@@ -11,7 +11,6 @@ public class Hotel {
     public static boolean[] pagada = new boolean[10]; // Indica si la habitación fue pagada o no
 
 
-
     public static void inicializarHotel() {
         for (int i = 0; i < 10; i++) {
             habitaciones[i] = "D"; // La D quiere decir que la habitacion esta disponible
@@ -104,6 +103,38 @@ public class Hotel {
             System.out.println("Clave incorrecta.");
         }
     }
+
+    // Pagar habitación
+    public static void pagarHabitacion(int numeroHabitacion) {
+        if (habitaciones[numeroHabitacion].startsWith("O") && !pagada[numeroHabitacion]) {
+            int precioPorNoche = conAlimentacion[numeroHabitacion] ? 45000 : 30000;
+            int total = nochesReservadas[numeroHabitacion] * precioPorNoche;
+            System.out.println("El total a pagar por la habitación " + (numeroHabitacion + 1) + " es de $" + total);
+            pagada[numeroHabitacion] = true;
+            System.out.println("Habitación " + (numeroHabitacion + 1) + " ha sido pagada.");
+        } else if (pagada[numeroHabitacion]) {
+            System.out.println("La habitación ya fue pagada.");
+        } else {
+            System.out.println("La habitación no está ocupada.");
+        }
+    }
+
+    // Liberar una habitación ocupada e imprimir boleta
+    public static void liberarHabitacion(int numeroHabitacion) {
+        if (habitaciones[numeroHabitacion].startsWith("O") && pagada[numeroHabitacion]) {
+            System.out.println("Habitación " + (numeroHabitacion + 1) + " ahora está disponible.");
+            habitaciones[numeroHabitacion] = "D";
+            nochesReservadas[numeroHabitacion] = 0;
+            conAlimentacion[numeroHabitacion] = false;
+            pagada[numeroHabitacion] = false;
+        } else if (!pagada[numeroHabitacion]) {
+            System.out.println("La habitación aún no ha sido pagada.");
+        } else {
+            System.out.println("La habitación no está ocupada.");
+        }
+    }
+
+
 
 
 
